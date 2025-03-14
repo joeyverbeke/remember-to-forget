@@ -92,31 +92,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     saveBtn.addEventListener('click', () => {
         if (pendingFiles.length > 0) {
-            const formData = new FormData();
-            pendingFiles.forEach(file => {
-                formData.append('images', file);
-            });
-
-            fetch('/api/upload', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(uploadedFiles => {
+            Promise.all(pendingFiles.map(file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    const id = Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                    const imageData = {
+                        id,
+                        data: e.target.result,
+                        originalData: e.target.result
+                    };
+                    await saveImage(imageData);
+                    resolve(imageData);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            })))
+            .then(savedImages => {
                 hasUploaded = true;
                 localStorage.setItem('hasUploaded', 'true');
                 uploadBtn.style.display = 'none';
                 uploadModal.style.display = 'none';
 
-                uploadedFiles.forEach(file => {
-                    // Add new image to grid
+                savedImages.forEach(imageData => {
                     const div = document.createElement('div');
                     div.className = 'photo-item';
                     
                     const img = document.createElement('img');
-                    img.src = file.url;
-                    img.dataset.id = file.id;
-                    img.dataset.originalSrc = file.url;
+                    img.src = imageData.data;
+                    img.dataset.id = imageData.id;
+                    img.dataset.originalSrc = imageData.originalData;
                     
                     div.appendChild(img);
                     document.getElementById('photo-grid').appendChild(div);

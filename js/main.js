@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Simple configuration
-    const SHOW_RESET = true;  // Set this to false to hide the reset button
+    const SHOW_RESET = false;  // Set this to false to hide the reset button
 
     // Upload state
     let hasUploaded = JSON.parse(localStorage.getItem('hasUploaded') || 'false');
@@ -69,22 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // echoes of what was
     let imageStates = JSON.parse(localStorage.getItem('imageStates') || '{}');
     
-    fetch('/api/images')
-        .then(response => response.json())
-        .then(images => {
-            images.forEach(image => {
-                const div = document.createElement('div');
-                div.className = 'photo-item';
-                
-                const img = document.createElement('img');
-                img.src = imageStates[image.id] || image.url;
-                img.dataset.id = image.id;
-                img.dataset.originalSrc = image.url;
-                
-                div.appendChild(img);
-                photoGrid.appendChild(div);
-            });
+    getAllImages().then(images => {
+        images.forEach(image => {
+            const div = document.createElement('div');
+            div.className = 'photo-item';
+            
+            const img = document.createElement('img');
+            img.src = image.data;
+            img.dataset.id = image.id;
+            img.dataset.originalSrc = image.originalData;
+            
+            div.appendChild(img);
+            photoGrid.appendChild(div);
         });
+    });
     
     photoGrid.addEventListener('click', (e) => {
         const img = e.target.closest('img');
@@ -153,14 +151,16 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = newImageUrl;
         modalImg.src = newImageUrl;
         
-        imageStates[img.dataset.id] = newImageUrl;
-        localStorage.setItem('imageStates', JSON.stringify(imageStates));
+        updateImage(img.dataset.id, {
+            id: img.dataset.id,
+            data: newImageUrl,
+            originalData: img.dataset.originalSrc
+        });
     }
 
     resetBtn.addEventListener('click', () => {
         if (confirm('Are you sure you want to reset all images to their original state?')) {
-            localStorage.removeItem('viewCounts');
-            localStorage.removeItem('imageStates');
+            clearImages();
             
             // Reset upload state
             hasUploaded = false;

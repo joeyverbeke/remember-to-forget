@@ -1,18 +1,11 @@
-# Images
-public/images/*
-!public/images/README.txt
-
-# Node
-node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# System Files
+# System files
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Local development
+__pycache__/
+*.pyc
+
+# Keep images directory structure but ignore contents
+images/*
+!images/.gitkeep 

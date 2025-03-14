@@ -21,20 +21,20 @@ body {
 
 .title-container {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     position: relative;
-    height: 1.8em;
+    min-height: 2.4em;
+    padding: 10px;
 }
 
 .title-container h1 {
-    position: absolute;
-    top: 0;
     width: 100%;
     letter-spacing: 0.5em;
     font-weight: 100;
     mix-blend-mode: difference;
     color: white;
-    font-size: 2em;
+    font-size: 1.8em;
+    line-height: 1.2;
 }
 
 .controls {
@@ -131,7 +131,7 @@ body {
 
 .upload-container {
     text-align: center;
-    margin-bottom: 20px;
+    margin: 60px 0 40px;
 }
 
 #upload-btn {
