@@ -12,9 +12,22 @@
         <div class="title-container">
             <h1>remember to forget.</h1>
         </div>
+        <div class="upload-container" id="upload-container">
+            <button id="upload-btn">make memories.</button>
+        </div>
+        <div class="upload-modal" id="upload-modal">
+            <div class="upload-content">
+                <div class="upload-area" id="upload-area">
+                    <p class="upload-text">you can only create memories once.</p>
+                    <div class="upload-icon">+</div>
+                    <div class="preview-grid" id="preview-grid"></div>
+                    <input type="file" id="file-input" multiple accept="image/*" style="display: none">
+                </div>
+            </div>
+        </div>
         <div id="photo-grid"></div>
         <div class="controls">
-            <button id="reset-btn">reset</button>
+            <button id="reset-btn">reset.</button>
         </div>
         
         <div id="modal" class="modal">
@@ -26,5 +39,6 @@
         </div>
     </div>
     <script src="/js/main.js"></script>
+    <script src="/js/upload.js"></script>
 </body>
 </html> 

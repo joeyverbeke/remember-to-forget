@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Simple configuration
+    const SHOW_RESET = true;  // Set this to false to hide the reset button
+
+    // Upload state
+    let hasUploaded = JSON.parse(localStorage.getItem('hasUploaded') || 'false');
+
     // breathe between light and shadow
     function easeInOutCubic(x) {
         return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
@@ -55,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.close');
     const resetBtn = document.getElementById('reset-btn');
     
+    // Hide reset button if configured
+    resetBtn.style.display = SHOW_RESET ? 'inline-block' : 'none';
+
     // count the rememberings
     let viewCounts = JSON.parse(localStorage.getItem('viewCounts') || '{}');
     // echoes of what was
@@ -147,11 +156,15 @@ document.addEventListener('DOMContentLoaded', () => {
         imageStates[img.dataset.id] = newImageUrl;
         localStorage.setItem('imageStates', JSON.stringify(imageStates));
     }
-    
+
     resetBtn.addEventListener('click', () => {
         if (confirm('Are you sure you want to reset all images to their original state?')) {
             localStorage.removeItem('viewCounts');
             localStorage.removeItem('imageStates');
+            
+            // Reset upload state
+            hasUploaded = false;
+            localStorage.setItem('hasUploaded', 'false');
             
             document.querySelectorAll('.photo-item img').forEach(img => {
                 img.src = img.dataset.originalSrc;
