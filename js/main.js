@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Simple configuration
-    const SHOW_RESET = false;  // Set this to false to hide the reset button
-
-    // Upload state
-    let hasUploaded = JSON.parse(localStorage.getItem('hasUploaded') || 'false');
+    // for those who don't want to forget
+    const SHOW_RESET = false;
 
     // breathe between light and shadow
     function easeInOutCubic(x) {
@@ -51,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(updateBackground);
     }
 
-    // Start the background animation
+    // what do we choose to attend to?
     animateBackground();
 
     const photoGrid = document.getElementById('photo-grid');
@@ -61,13 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.close');
     const resetBtn = document.getElementById('reset-btn');
     
-    // Hide reset button if configured
     resetBtn.style.display = SHOW_RESET ? 'inline-block' : 'none';
 
     // count the rememberings
     let viewCounts = JSON.parse(localStorage.getItem('viewCounts') || '{}');
-    // echoes of what was
-    let imageStates = JSON.parse(localStorage.getItem('imageStates') || '{}');
     
     getAllImages().then(images => {
         images.forEach(image => {
@@ -162,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirm('Are you sure you want to reset all images to their original state?')) {
             clearImages();
             
-            // Reset upload state
             hasUploaded = false;
             localStorage.setItem('hasUploaded', 'false');
             

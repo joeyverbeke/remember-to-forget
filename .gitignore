@@ -5,6 +5,7 @@ Thumbs.db
 # Local development
 __pycache__/
 *.pyc
+pachage-lock.json
 
 # Keep images directory structure but ignore contents
 images/*

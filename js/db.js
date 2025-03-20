@@ -1,8 +1,7 @@
-// Database handling
 const dbName = 'memoryGallery';
 const storeName = 'images';
 
-// Initialize database
+// establish neural pathways
 async function initDB() {
     return new Promise((resolve, reject) => {
         const request = indexedDB.open(dbName, 1);
@@ -19,7 +18,7 @@ async function initDB() {
     });
 }
 
-// Save image to IndexedDB
+// construct a semblance of permanence
 async function saveImage(imageData) {
     const db = await initDB();
     return new Promise((resolve, reject) => {
@@ -32,7 +31,7 @@ async function saveImage(imageData) {
     });
 }
 
-// Get all images from IndexedDB
+// remember?
 async function getAllImages() {
     const db = await initDB();
     return new Promise((resolve, reject) => {
@@ -45,7 +44,7 @@ async function getAllImages() {
     });
 }
 
-// Update image data (for degradation)
+// forget?
 async function updateImage(id, newData) {
     const db = await initDB();
     return new Promise((resolve, reject) => {
@@ -58,7 +57,7 @@ async function updateImage(id, newData) {
     });
 }
 
-// Clear all images
+// forget.
 async function clearImages() {
     const db = await initDB();
     return new Promise((resolve, reject) => {

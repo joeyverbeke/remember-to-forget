@@ -1,4 +1,3 @@
-// Upload functionality
 document.addEventListener('DOMContentLoaded', () => {
     const uploadBtn = document.getElementById('upload-btn');
     const uploadModal = document.getElementById('upload-modal');
@@ -10,11 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let pendingFiles = [];
     let hasUploaded = JSON.parse(localStorage.getItem('hasUploaded') || 'false');
 
-    // Move upload icon to preview grid initially
     const uploadIcon = document.querySelector('.upload-icon');
     previewGrid.appendChild(uploadIcon);
 
-    // Hide upload button if already uploaded
     if (hasUploaded) {
         uploadBtn.style.display = 'none';
     }
@@ -27,11 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     uploadIcon.addEventListener('click', (e) => {
-        e.stopPropagation();  // Prevent event from bubbling
+        e.stopPropagation();
         fileInput.click();
     });
 
-    // Drag and drop handling
     uploadArea.addEventListener('dragenter', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -84,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsDataURL(file);
     }
 
-    // Save button
     const saveBtn = document.createElement('button');
     saveBtn.textContent = 'remember.';
     saveBtn.className = 'save-btn';
@@ -126,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('photo-grid').appendChild(div);
                 });
 
-                // Clear previews and pending files
                 previewGrid.innerHTML = '';
                 pendingFiles = [];
             })
